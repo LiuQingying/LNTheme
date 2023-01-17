@@ -80,6 +80,7 @@ static NSPointerArray *themeHashTable;
         isChangeTheme = NO;
         [wself ln_updateThemeCompleted];
     });
+    
 }
 
 //更新字体
@@ -334,6 +335,13 @@ static NSPointerArray *themeHashTable;
 
 @end
 
+@implementation UITabBarAppearance (LNTheme)
+- (void)ln_backgroundImageNamed:(NSString *)name {
+    [self setThemePicker:self selector:@"setBackgroundImage:" picker:[LNThemePicker initWithImageName:name]];
+}
+
+@end
+
 @implementation UITabBar (LNTheme)
 - (void)ln_bartintColor:(NSString *)type {
     [self setThemePicker:self selector:@"setBarTintColor:" picker:[LNThemePicker initWithColorType:type]];
@@ -367,6 +375,13 @@ static NSPointerArray *themeHashTable;
                   picker:[LNThemePicker initTextAttributesColorType:colorType font:fontType forState:state]];
 }
 
+@end
+
+@implementation UINavigationBarAppearance (LNTheme)
+
+- (void)ln_backgroundImageNamed:(NSString *)name {
+    [self setThemePicker:self selector:@"setBackgroundImage:" picker:[LNThemePicker initWithImageName:name]];
+}
 @end
 
 @implementation UINavigationBar (LNTheme)

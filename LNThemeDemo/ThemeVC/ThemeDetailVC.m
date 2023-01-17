@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"主题详情";
     self.view.backgroundColor = [UIColor whiteColor];
     self.nameLabel.text = self.model.name;
     self.titleLabel.text = self.model.descriptionField;

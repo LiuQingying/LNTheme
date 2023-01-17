@@ -40,6 +40,11 @@
 - (void)ln_backgroundColor:(NSString *)type;
 @end
 
+@interface UITabBarAppearance (LNTheme)
+- (void)ln_backgroundImageNamed:(NSString *)name;
+
+@end
+
 @interface UITabBar (LNTheme)
 - (void)ln_bartintColor:(NSString *)type;
 - (void)ln_backgroundImageNamed:(NSString *)name;
@@ -50,6 +55,12 @@
 - (void)ln_imageNamed:(NSString *)name renderingMode:(UIImageRenderingMode)mode;
 - (void)ln_selectedImageNamed:(NSString *)name renderingMode:(UIImageRenderingMode)mode;
 - (void)ln_titleTextAttributesColorType:(NSString *)colorType font:(NSString *)fontType forState:(UIControlState)state;
+@end
+
+@interface UINavigationBarAppearance (LNTheme)
+
+- (void)ln_backgroundImageNamed:(NSString *)name;
+
 @end
 
 @interface UINavigationBar (LNTheme)

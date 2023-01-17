@@ -18,21 +18,45 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.lnTabBar.barStyle = UIBarStyleBlack;
-    [self.lnTabBar ln_backgroundImageNamed:@"cm2_btm_bg"];
+//    self.lnTabBar.barStyle = UIBarStyleBlack;
+    [self setupUI];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setupUI) name:LNThemeUpdateCompletedNotification object:nil];
+
     
+}
+- (void)setupUI {
+    if (@available(iOS 15.0, *)) {
+        UITabBarAppearance *tabBarAppearance = [[UITabBarAppearance alloc] init];
+        [tabBarAppearance ln_backgroundImageNamed:@"cm2_btm_bg"];
+        tabBarAppearance.backgroundEffect = nil;
+        tabBarAppearance.shadowColor = UIColor.clearColor;
+        [tabBarAppearance setShadowImage:[UIImage new]];
+        NSDictionary *textAttributes = @{NSFontAttributeName:[LNTheme fontForType:@"f2"],
+                                                                     NSForegroundColorAttributeName:[LNTheme colorForType:@"ctabn"]};
+        tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = textAttributes;
+        NSDictionary *textAttributes1 = @{NSFontAttributeName:[LNTheme fontForType:@"f2"],
+                               NSForegroundColorAttributeName:[LNTheme colorForType:@"ctabh"]};
+        tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = textAttributes1;
+        self.lnTabBar.scrollEdgeAppearance = tabBarAppearance;
+        self.lnTabBar.standardAppearance = tabBarAppearance;
+    } else {
+      // 常规配置方式
+        [self.lnTabBar ln_backgroundImageNamed:@"cm2_btm_bg"];
+        [self.lnTabBar setShadowImage:[UIImage new]];
+    }
+
     NSArray *normalImages = @[@"cm2_btm_icn_discovery",@"cm2_btm_icn_music",@"cm2_btm_icn_friend",@"cm2_btm_icn_account"];
     NSArray *prsImages = @[@"cm2_btm_icn_discovery_prs",@"cm2_btm_icn_music_prs",@"cm2_btm_icn_friend_prs",@"cm2_btm_icn_account_prs"];
     for (NSInteger i = 0; i < self.lnTabBar.items.count; i++) {
         UITabBarItem *item = self.lnTabBar.items[i];
-        [item ln_imageInsets:@"NMTabBarBadgeTextViewOriginOffset"];
+        item.imageInsets = UIEdgeInsetsMake(0, 0, 30, 0);
+//        [item ln_imageInsets:@"NMTabBarBadgeTextViewOriginOffset"];
         [item ln_imageNamed:normalImages[i] renderingMode:UIImageRenderingModeAlwaysOriginal];
         [item ln_selectedImageNamed:prsImages[i] renderingMode:UIImageRenderingModeAlwaysOriginal];
         [item ln_titleTextAttributesColorType:@"ctabn" font:@"f2" forState:UIControlStateNormal];
-        [item ln_titleTextAttributesColorType:@"ctabn" font:@"f2" forState:UIControlStateSelected];
+        [item ln_titleTextAttributesColorType:@"ctabh" font:@"f2" forState:UIControlStateSelected];
     }
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
